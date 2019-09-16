@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Front() {
-  return <div>Front</div>;
+  return <div>Front v2</div>;
 }
