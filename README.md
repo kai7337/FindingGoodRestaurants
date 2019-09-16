@@ -1,2 +1,0 @@
-# FindingGoodRestaurants
-Created with CodeSandbox
