@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { db } from "../../utils/firebase";
-import MyContext from "../../utils/context";
 import { addDays } from "date-fns";
 import Place from "../Front/Place";
 import { Card, Button, Row, CardDeck } from "react-bootstrap";
 import { FullScreenLoading } from "../../components/loading.js/loading";
+import { Link } from "react-router-dom";
 
-export default function Food({ match }) {
+export default function Category({ match }) {
   let [cats, setCats] = useState([]);
   let [isLoading, setIsLoading] = useState(true);
 
@@ -60,8 +60,10 @@ function CategoryCard({ cat }) {
         }}
       >
         <Card.Title>{data.category}</Card.Title>
-        <div style={{ flexGrow: 1 }}>45 restraurants</div>
-        <Button variant="primary">Go somewhere</Button>
+        <div style={{ flexGrow: 1 }}>restraurants</div>
+        <Link to={`/food/${cat.id}`}>
+          <Button variant="primary">Go somewhere</Button>
+        </Link>
       </Card.Body>
     </Card>
   );

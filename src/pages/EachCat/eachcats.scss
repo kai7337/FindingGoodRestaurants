@@ -1,0 +1,17 @@
+.EachCat {
+  .cards {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 600px) {
+    .cards {
+      flex-wrap: wrap;
+
+      > * {
+        flex-grow: 1;
+      }
+    }
+  }
+
+}

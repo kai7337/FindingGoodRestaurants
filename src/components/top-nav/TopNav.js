@@ -3,7 +3,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { auth } from "../../utils/firebase";
 
-const MENU1 = [["/", "Home"], ["/food", "Food"]];
+const MENU1 = [["/", "Home"], ["/food", "Category"]];
 
 export default function TopNav() {
   return (
@@ -24,7 +24,7 @@ export default function TopNav() {
             </Link>
             <NavDropdown.Divider />
             <Link to="/food" className="dropdown-item">
-              Foods
+              Categories
             </Link>
           </NavDropdown>
 

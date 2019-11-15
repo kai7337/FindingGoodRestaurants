@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Front from "./pages/Front/Front";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import category from "./components/category/category";
-import Food from "./pages/Food/Food";
-import MyContext from "./utils/context";
 import { db, auth } from "./utils/firebase";
 import { Login, Signup } from "./pages/login/login";
 import TopNav from "./components/top-nav/TopNav";
+import Category from "./pages/Category/category";
+import EachCat from "./pages/EachCat/eachcats";
+import UserContext from "./utils/userContext";
 
 export default function App() {
   let [loggedIn, setLoggedIn] = useState(false);
   let [loading, setLoading] = useState(
     localStorage.getItem("loggedIn") === "true"
   );
+  let [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      setLoading(false);
+    auth.onAuthStateChanged(async user => {
       if (user) {
         localStorage.setItem("loggedIn", "true");
+        let ss = await db
+          .collection("users")
+          .doc(user.email)
+          .get();
+        setAdmin(ss.data().admin);
         setLoggedIn(true);
+        setLoading(false);
       } else {
         localStorage.setItem("loggedIn", "false");
         setLoggedIn(false);
+        setLoading(false);
       }
     });
   }, []);
@@ -43,16 +50,15 @@ export default function App() {
   }
 
   return (
-    <MyContext.Provider value={{ x: 12 }}>
-      <div className="App">
+    <div className="App">
+      <UserContext.Provider value={admin}>
         <TopNav />
-
         <Switch>
-          <Route path="/food" component={Food} />
+          <Route path="/food/:catId/:page?" component={EachCat} />
+          <Route path="/food" component={Category} />
           <Route path="/" component={Front} />
-          <Route path="/korean" component={category} />
         </Switch>
-      </div>
-    </MyContext.Provider>
+      </UserContext.Provider>
+    </div>
   );
 }
